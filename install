@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DESTINATION="$HOME/tcred"
+
+if [ "$(pwd)" != "$DESTINATION" ]; then
+  echo "Imcorect location. Move directory to $HOME and try again"
+  exit 0;
+fi
+
+echo "alias tcred='$DESTINATION/bash/creds.sh'" >> $HOME/.bashrc
+
+if [ -e "$HOME/.zshrc" ]; then
+    echo "alias tcred='$DESTINATION/zsh/creds.zsh'" >> $HOME/.zshc
+    echo "Alias for ZSH created"
+fi
+
+echo "Installation complete."
+echo "Restart terminal or use 'source ~/.bashrc' - for bash or 'source ~/.zshrc' - for zsh"
