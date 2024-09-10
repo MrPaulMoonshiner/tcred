@@ -6,30 +6,34 @@
 # count=$((count + 1))
 # echo $count > $COUNTER_FILE
 
-COUNTER_FILE="$HOME/tcred/counter/storage.json"
+COUNTER_FILE="$HOME/tcred/counter/storage.txt"
 
-# Перевіряємо, чи існує файл, якщо ні - створюємо його з порожнім об'єктом
+# Перевіряємо, чи існує файл, якщо ні - створюємо його
 if [ ! -f "$COUNTER_FILE" ]; then
-    echo "{}" > "$COUNTER_FILE"
+    touch "$COUNTER_FILE"
 fi
+
+# Ініціалізуємо асоціативний масив
+declare -A counter
+
+# Зчитуємо поточний вміст файлу у масив
+while IFS="=" read -r key value; do
+    counter["$key"]="$value"
+done < "$COUNTER_FILE"
 
 # Отримуємо поточну дату
 current_date=$(date +"%Y-%m-%d")
 
-# Зчитуємо поточний вміст файлу
-data=$(cat "$COUNTER_FILE")
-
-# Отримуємо поточне значення лічильника для поточної дати
-count=$(echo "$data" | jq -r --arg date "$current_date" '.[$date] // 0')
-
-# Збільшуємо лічильник на 1
+# Збільшуємо лічильник для поточної дати
+count=${counter["$current_date"]}
 count=$((count + 1))
+counter["$current_date"]=$count
 
-# Оновлюємо JSON з новим значенням лічильника
-updated_data=$(echo "$data" | jq --arg date "$current_date" --argjson count "$count" '.[$date] = $count')
-
-# Записуємо оновлений JSON у файл
-echo "$updated_data" > "$COUNTER_FILE"
+# Записуємо оновлений масив у файл
+> "$COUNTER_FILE"
+for key in "${!counter[@]}"; do
+    echo "$key=${counter[$key]}" >> "$COUNTER_FILE"
+done
 
 # Виводимо поточне значення лічильника
-echo "Скрипт був запущений $count разів на дату $current_date"
+echo "Скрипт був запущений ${counter[$current_date]} разів на дату $current_date"
