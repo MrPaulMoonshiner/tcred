@@ -4,6 +4,7 @@ FILE="$HOME/tcred/counter/storage"
 
 DATE=$(date +"%Y-%m-%d")
 
+# Ініціалізація асоціативного масиву
 typeset -A run_counts
 
 read_data() {
