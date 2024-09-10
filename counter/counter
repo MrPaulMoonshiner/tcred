@@ -10,7 +10,7 @@ COUNTER_FILE="$HOME/tcred/counter/storage"
 
 # Перевіряємо, чи існує файл, якщо ні - створюємо його
 if [ ! -f "$COUNTER_FILE" ]; then
-    touch "$COUNTER_FILE"
+    echo "{}" > "$COUNTER_FILE"
 fi
 
 # Ініціалізуємо асоціативний масив
@@ -24,16 +24,15 @@ done < "$COUNTER_FILE"
 # Отримуємо поточну дату
 current_date=$(date +"%Y-%m-%d")
 
-# Збільшуємо лічильник для поточної дати
-count=${counter["$current_date"]}
-count=$((count + 1))
-counter["$current_date"]=$count
+# Перевіряємо існування елемента масиву по ключу (поточна дата)
+if [ -z "${counter[$current_date]}" ]; then
+    counter["$current_date"]=1
+else
+    counter["$current_date"]=$((counter["$current_date"] + 1))
+fi
 
 # Записуємо оновлений масив у файл
 > "$COUNTER_FILE"
 for key in "${!counter[@]}"; do
     echo "$key=${counter[$key]}" >> "$COUNTER_FILE"
 done
-
-# Виводимо поточне значення лічильника
-echo "Скрипт був запущений ${counter[$current_date]} разів на дату $current_date"
