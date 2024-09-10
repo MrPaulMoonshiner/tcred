@@ -2,6 +2,7 @@
 
 DATA_FILE="$HOME/tcred/counter/storage"
 current_date=$(date +%F)
+
 declare -A usage_data
 
 if [[ -f $DATA_FILE ]]; then
@@ -21,6 +22,3 @@ fi
         echo "$key=${usage_data[$key]}"
     done
 } > "$DATA_FILE"
-
-echo "Скрипт запущено ${usage_data[$current_date]} разів сьогодні ($current_date)."
-
