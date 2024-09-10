@@ -1,23 +1,25 @@
 #!/bin/zsh
 
-DATA_FILE="$HOME/tcred/counter/storage"
-current_date=$(date +%F)
-typeset -A usage_data
+LOG_FILE="$HOME/tcred/counter/storage"
 
-if [[ -f $DATA_FILE ]]; then
-    while IFS="=" read -r key value; do
-        usage_data["$key"]=$value
-    done < "$DATA_FILE"
-fi
+CURRENT_DATE=$(date +"%Y-%m-%d")
 
-if [[ -n "${usage_data[$current_date]}" ]]; then
-    usage_data["$current_date"]=$((usage_data["$current_date"] + 1))
+if [ -f "$LOG_FILE" ]; then
+    declare -A launch_data
+    source "$LOG_FILE"
+
+    if [[ -n "${launch_data[$CURRENT_DATE]}" ]]; then
+        ((launch_data[$CURRENT_DATE]++))
+    else
+        launch_data[$CURRENT_DATE]=1
+    fi
 else
-    usage_data["$current_date"]=1
+    declare -A launch_data
+    launch_data[$CURRENT_DATE]=1
 fi
 
-{
-    for key in ${(k)usage_data}; do
-        echo "$key=${usage_data[$key]}"
-    done
-} > "$DATA_FILE"
+echo "declare -A launch_data=(" > "$LOG_FILE"
+for key value in ${(kv)launch_data}; do
+    echo "  [$key]=$value" >> "$LOG_FILE"
+done
+echo ")" >> "$LOG_FILE"
