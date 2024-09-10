@@ -4,9 +4,7 @@ FILE="$HOME/tcred/counter/storage"
 
 DATE=$(date +"%Y-%m-%d")
 
-
 declare -A run_counts
-
 
 read_data() {
     if [ -f "$FILE" ]; then
@@ -14,7 +12,6 @@ read_data() {
             run_counts["$key"]=$value
         done < "$FILE"
     else
-
         touch "$FILE"
     fi
 }

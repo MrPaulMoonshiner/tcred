@@ -4,26 +4,31 @@ FILE="$HOME/tcred/counter/storage"
 
 DATE=$(date +"%Y-%m-%d")
 
-run_counts=""
+typeset -A run_counts
 
 read_data() {
     if [ -f "$FILE" ]; then
-        run_counts=$(cat "$FILE")
+        while IFS="=" read -r key value; do
+            run_counts["$key"]=$value
+        done < "$FILE"
     else
         touch "$FILE"
     fi
 }
 
 write_data() {
-    echo "$run_counts" > "$FILE"
+    > "$FILE"
+    for key in ${(k)run_counts}; do
+        echo "$key=${run_counts[$key]}" >> "$FILE"
+    done
 }
 
 read_data
 
-if echo "$run_counts" | grep -q "$DATE"; then
-    run_counts=$(echo "$run_counts" | sed -E "s/($DATE=)([0-9]+)/echo \1$((\2 + 1))/e")
+if [[ -n "${run_counts[$DATE]}" ]]; then
+    run_counts[$DATE]=$((run_counts[$DATE] + 1))
 else
-    run_counts="$run_counts\n$DATE=1"
+    run_counts[$DATE]=1
 fi
 
 write_data
