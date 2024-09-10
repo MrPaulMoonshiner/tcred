@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE="$HOME/tcred/counter/storage.txt"
+LOG_FILE="$HOME/tcred/counter/storage"
 
 print_launch_data() {
     local total_launches=0
