@@ -1,36 +1,26 @@
 #!/bin/bash
 
-FILE="$HOME/tcred/counter/storage"
+DATA_FILE="$HOME/tcred/counter/storage"
+current_date=$(date +%F)
+declare -A usage_data
 
-DATE=$(date +"%Y-%m-%d")
-
-declare -A run_counts
-
-read_data() {
-    if [ -f "$FILE" ]; then
-        while IFS="=" read -r key value; do
-            run_counts["$key"]=$value
-        done < "$FILE"
-    else
-        touch "$FILE"
-    fi
-}
-
-
-write_data() {
-    > "$FILE"
-    for key in "${!run_counts[@]}"; do
-        echo "$key=${run_counts[$key]}" >> "$FILE"
-    done
-}
-
-
-read_data
-
-if [ -n "${run_counts[$DATE]}" ]; then
-    run_counts[$DATE]=$((run_counts[$DATE] + 1))
-else
-    run_counts[$DATE]=1
+if [[ -f $DATA_FILE ]]; then
+    while IFS="=" read -r key value; do
+        usage_data["$key"]=$value
+    done < "$DATA_FILE"
 fi
 
-write_data
+if [[ -n "${usage_data[$current_date]}" ]]; then
+    usage_data["$current_date"]=$((usage_data["$current_date"] + 1))
+else
+    usage_data["$current_date"]=1
+fi
+
+{
+    for key in "${!usage_data[@]}"; do
+        echo "$key=${usage_data[$key]}"
+    done
+} > "$DATA_FILE"
+
+echo "Скрипт запущено ${usage_data[$current_date]} разів сьогодні ($current_date)."
+
