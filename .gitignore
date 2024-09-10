@@ -1,2 +1,3 @@
-storage/data_storage
-storage/key_value_storage
+storage/*
+
+!storage/
