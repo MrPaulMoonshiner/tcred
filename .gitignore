@@ -1,2 +1,2 @@
-./storage/data_storage
-./storage/key_value_storage
+storage/data_storage
+storage/key_value_storage
