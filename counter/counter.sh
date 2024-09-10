@@ -1,7 +1,6 @@
 #!/bin/bash
 
 LOG_FILE="$HOME/tcred/counter/storage"
-
 CURRENT_DATE=$(date +"%Y-%m-%d")
 
 if [ -f "$LOG_FILE" ]; then
@@ -19,7 +18,7 @@ else
 fi
 
 echo "declare -A launch_data=(" > "$LOG_FILE"
-for key value in ${(kv)launch_data}; do
-    echo "  [$key]=$value" >> "$LOG_FILE"
+for key in "${!launch_data[@]}"; do
+    echo "  [\"$key\"]=${launch_data[$key]}" >> "$LOG_FILE"
 done
 echo ")" >> "$LOG_FILE"
