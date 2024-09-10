@@ -9,7 +9,7 @@ run_command() {
          source $HOME/tcred/counter/report
     fi
 
-    source $HOME/tcred/counter/counter
+    source $HOME/tcred/counter/counter.sh
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
         source $TCRED_DIR/creds_help.sh 
