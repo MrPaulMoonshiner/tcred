@@ -8,9 +8,12 @@
 
 COUNTER_FILE="$HOME/tcred/counter/storage"
 
+# Отримуємо поточну дату
+current_date=$(date +"%Y-%m-%d")
+
 # Перевіряємо, чи існує файл, якщо ні - створюємо його
 if [ ! -f "$COUNTER_FILE" ]; then
-    echo "{}" > "$COUNTER_FILE"
+    echo "$current_date"="1" > "$COUNTER_FILE"
 fi
 
 # Ініціалізуємо асоціативний масив
@@ -21,8 +24,6 @@ while IFS="=" read -r key value; do
     counter["$key"]="$value"
 done < "$COUNTER_FILE"
 
-# Отримуємо поточну дату
-current_date=$(date +"%Y-%m-%d")
 
 # Перевіряємо існування елемента масиву по ключу (поточна дата)
 if [ -z "${counter[$current_date]}" ]; then
