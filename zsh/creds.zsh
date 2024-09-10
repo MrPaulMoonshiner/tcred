@@ -2,18 +2,18 @@
 
 TCRED_DIR="$HOME/tcred/zsh"
 TCRED_STORAGE_DIR="$HOME/tcred/storage"
-COUNTER_FILE="$TCRED_DIR/counter.txt"
 
 # Function to run the command with the given variables
 run_command() {
-    
-    count=$(cat $COUNTER_FILE)
-    count=$((count + 1))
-    echo $count > $COUNTER_FILE
+
+    source $HOME/tcred/counter/counter
+
+    if [[ "$1" == "--report" || "$1" == "-r" ]]; then
+         source $HOME/tcred/counter/report
+    fi
 
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
-        echo lsa
         source $TCRED_DIR/creds_help.zsh 
         exit 0
     fi

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+COUNTER_FILE="$HOME/tcred/counter/storage.txt"
+
+tc_count() {
+    count=$(cat $COUNTER_FILE)
+    count=$((count + 1))
+    echo $count > $COUNTER_FILE
+}
+
+tc_count_report() {
+    count=$(cat $COUNTER_FILE)
+    echo Tcred runs $count times in zsh
+    exit 0
+}
