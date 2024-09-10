@@ -18,6 +18,8 @@ if [ -f "$LOG_FILE" ]; then
     declare -A launch_data
     source "$LOG_FILE"
     print_launch_data
+    exit 0;
 else
     echo "Tcred logs not found"
+    exit 0;
 fi
