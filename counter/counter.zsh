@@ -2,7 +2,7 @@
 
 DATA_FILE="$HOME/tcred/counter/storage"
 current_date=$(date +%F)
-declare -A usage_data
+typeset -A usage_data
 
 if [[ -f $DATA_FILE ]]; then
     while IFS="=" read -r key value; do
@@ -17,9 +17,7 @@ else
 fi
 
 {
-    for key in "${!usage_data[@]}"; do
+    for key in ${(k)usage_data}; do
         echo "$key=${usage_data[$key]}"
     done
 } > "$DATA_FILE"
-
-echo "Скрипт запущено ${usage_data[$current_date]} разів сьогодні ($current_date)."
