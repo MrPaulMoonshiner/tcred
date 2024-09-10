@@ -1,10 +1,4 @@
-#!/bin/bash
-
-# COUNTER_FILE="$HOME/tcred/counter/storage.txt"
-
-# count=$(cat $COUNTER_FILE)
-# count=$((count + 1))
-# echo $count > $COUNTER_FILE
+#!/bin/zsh
 
 FILE="$HOME/tcred/counter/storage"
 
