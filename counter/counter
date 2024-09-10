@@ -6,7 +6,7 @@
 # count=$((count + 1))
 # echo $count > $COUNTER_FILE
 
-COUNTER_FILE="$HOME/tcred/counter/storage.txt"
+COUNTER_FILE="$HOME/tcred/counter/storage"
 
 # Перевіряємо, чи існує файл, якщо ні - створюємо його
 if [ ! -f "$COUNTER_FILE" ]; then
