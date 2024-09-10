@@ -6,34 +6,32 @@
 # count=$((count + 1))
 # echo $count > $COUNTER_FILE
 
-COUNTER_FILE="$HOME/tcred/counter/storage"
+FILE="$HOME/tcred/counter/storage"
+# Отримання поточної дати
+DATE=$(date +"%Y-%m-%d")
 
-# Отримуємо поточну дату
-current_date=$(date +"%Y-%m-%d")
+# Ініціалізація масиву
+declare -A run_counts
 
-# Перевіряємо, чи існує файл, якщо ні - створюємо його
-if [ ! -f "$COUNTER_FILE" ]; then
-    echo "$current_date"="1" > "$COUNTER_FILE"
-fi
-
-# Ініціалізуємо асоціативний масив
-declare -A counter
-
-# Зчитуємо поточний вміст файлу у масив
-while IFS="=" read -r key value; do
-    counter["$key"]="$value"
-done < "$COUNTER_FILE"
-
-
-# Перевіряємо існування елемента масиву по ключу (поточна дата)
-if [ -z "${counter[$current_date]}" ]; then
-    counter["$current_date"]=1
+# Якщо файл існує, зчитуємо дані
+if [ -f "$FILE" ]; then
+    while IFS="=" read -r key value; do
+        run_counts["$key"]=$value
+    done < "$FILE"
 else
-    counter["$current_date"]=$((counter["$current_date"] + 1))
+    # Якщо файл не існує, створюємо його
+    touch "$FILE"
 fi
 
-# Записуємо оновлений масив у файл
-> "$COUNTER_FILE"
-for key in "${!counter[@]}"; do
-    echo "$key=${counter[$key]}" >> "$COUNTER_FILE"
+# Збільшуємо кількість запусків для поточної дати
+if [ -n "${run_counts[$DATE]}" ]; then
+    run_counts[$DATE]=$((run_counts[$DATE] + 1))
+else
+    run_counts[$DATE]=1
+fi
+
+# Записуємо оновлені дані у файл
+> "$FILE"
+for key in "${!run_counts[@]}"; do
+    echo "$key=${run_counts[$key]}" >> "$FILE"
 done
