@@ -7,6 +7,7 @@
 # echo $count > $COUNTER_FILE
 
 FILE="$HOME/tcred/counter/storage"
+
 # Отримання поточної дати
 DATE=$(date +"%Y-%m-%d")
 
