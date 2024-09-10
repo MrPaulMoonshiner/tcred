@@ -4,32 +4,28 @@ FILE="$HOME/tcred/counter/storage"
 
 DATE=$(date +"%Y-%m-%d")
 
-# Ініціалізація асоціативного масиву
-typeset -A run_counts
+# Ініціалізація змінної для зберігання даних
+run_counts=""
 
 read_data() {
     if [ -f "$FILE" ]; then
-        while IFS="=" read -r key value; do
-            run_counts["$key"]=$value
-        done < "$FILE"
+        run_counts=$(cat "$FILE")
     else
         touch "$FILE"
     fi
 }
 
 write_data() {
-    > "$FILE"
-    for key in ${(k)run_counts}; do
-        echo "$key=${run_counts[$key]}" >> "$FILE"
-    done
+    echo "$run_counts" > "$FILE"
 }
 
 read_data
 
-if [[ -n "${run_counts[$DATE]}" ]]; then
-    run_counts[$DATE]=$((run_counts[$DATE] + 1))
+# Збільшуємо кількість запусків для поточної дати
+if echo "$run_counts" | grep -q "$DATE"; then
+    run_counts=$(echo "$run_counts" | sed -E "s/($DATE=)([0-9]+)/echo \1$((\2 + 1))/e")
 else
-    run_counts[$DATE]=1
+    run_counts="$run_counts\n$DATE=1"
 fi
 
 write_data
