@@ -7,7 +7,7 @@ TCRED_STORAGE_DIR="$HOME/tcred/storage"
 run_command() {
 
     if [[ "$1" == "--report" || "$1" == "-r" ]]; then
-         source $HOME/tcred/counter/report
+         source $HOME/tcred/counter/report.zsh
     fi
 
     source $HOME/tcred/counter/counter.zsh

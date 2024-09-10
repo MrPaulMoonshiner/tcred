@@ -7,11 +7,11 @@ TCRED_STORAGE_DIR="$HOME/tcred/storage"
 run_command() {
 
     if [[ "$1" == "--report" || "$1" == "-r" ]]; then
-         source $HOME/tcred/counter/report
+         source $HOME/tcred/counter/report.sh
     fi
 
     source $HOME/tcred/counter/counter.sh
-    
+
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
         source $TCRED_DIR/creds_help.sh 
