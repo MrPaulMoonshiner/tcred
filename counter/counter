@@ -13,15 +13,28 @@ DATE=$(date +"%Y-%m-%d")
 # Ініціалізація масиву
 declare -A run_counts
 
-# Якщо файл існує, зчитуємо дані
-if [ -f "$FILE" ]; then
-    while IFS="=" read -r key value; do
-        run_counts["$key"]=$value
-    done < "$FILE"
-else
-    # Якщо файл не існує, створюємо його
-    touch "$FILE"
-fi
+# Функція для зчитування даних з файлу
+read_data() {
+    if [ -f "$FILE" ]; then
+        while IFS="=" read -r key value; do
+            run_counts["$key"]=$value
+        done < "$FILE"
+    else
+        # Якщо файл не існує, створюємо його
+        touch "$FILE"
+    fi
+}
+
+# Функція для запису даних у файл
+write_data() {
+    > "$FILE"
+    for key in "${!run_counts[@]}"; do
+        echo "$key=${run_counts[$key]}" >> "$FILE"
+    done
+}
+
+# Зчитуємо дані з файлу
+read_data
 
 # Збільшуємо кількість запусків для поточної дати
 if [ -n "${run_counts[$DATE]}" ]; then
@@ -31,7 +44,4 @@ else
 fi
 
 # Записуємо оновлені дані у файл
-> "$FILE"
-for key in "${!run_counts[@]}"; do
-    echo "$key=${run_counts[$key]}" >> "$FILE"
-done
+write_data
