@@ -2,9 +2,13 @@
 
 TCRED_DIR="$HOME/tcred/bash"
 TCRED_STORAGE_DIR="$HOME/tcred/storage"
+COUNTER_FILE="$TCRED_DIR/counter.txt"
 
 # Function to run the command with the given variables
 run_command() {
+    count=$(cat $COUNTER_FILE)
+    count=$((count + 1))
+    echo $count > $COUNTER_FILE
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
         echo lsa
