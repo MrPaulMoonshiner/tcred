@@ -4,6 +4,11 @@ TCRED_STORAGE_DIR="$HOME/tcred/storage"
 source $TCRED_STORAGE_DIR/key_value_storage
 
 terminus_export() {
+    
+    if [[ -z ${url_aliases[$2]} ]]; then
+        echo "Error: Unknown URL alias '$alias'"
+        exit 1
+    fi
     CURRENT_DATE=$(date +"%Y_%m_%d")
     local util='backup:get'
     local url=${url_aliases[$2]}
