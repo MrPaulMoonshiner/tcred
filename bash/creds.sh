@@ -13,7 +13,7 @@ run_command() {
     source $HOME/tcred/counter/counter.sh
 
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
-        source $TCRED_DIR/export.zsh 
+        source $TCRED_DIR/export.sh 
         exit 0
     fi
 
