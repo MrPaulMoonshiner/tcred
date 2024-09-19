@@ -21,7 +21,7 @@ show_help() {
     echo
     echo "For importing data from csv file use -i or --import flag and path to file.csv"
     echo
-    echo "For download database use --export_db or -dbex flag and URL alias [tcred -dbex bit]"
+    echo "For download database use --export_db or -dbex flag and URL alias [example: tcred -dbex bit]"
     echo
     echo "DB export parameters: 1: flag, 2: url_alias, 3: element[default:db], 4: path[default:current path]."
     echo
