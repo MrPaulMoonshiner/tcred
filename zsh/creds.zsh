@@ -15,7 +15,7 @@ run_command() {
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
         source $TCRED_DIR/export.zsh 
         local url=$2
-        local env=${3:-'./'}
+        local env=${3:-live}
         local element=${4:-db}
         local path=${5:-$HOME}
         terminus_export $url $env $element $path
