@@ -18,6 +18,8 @@ run_command() {
         local env=${3:-live}
         local path=${4:-$HOME}
         local element=${5:-db}
+        echo "Current PATH: $PATH"
+        which terminus
         terminus_export $url $env $path $element 
         exit 0
     fi
