@@ -12,11 +12,6 @@ run_command() {
 
     source $HOME/tcred/counter/counter.sh
 
-         if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
-        source $TCRED_DIR/export.sh 
-        exit 0
-    fi
-
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
         source $TCRED_DIR/creds_help.sh 
@@ -43,6 +38,11 @@ run_command() {
     if [[ -z ${url_aliases[$alias]} ]]; then
         echo "Error: Unknown URL alias '$alias'"
         exit 1
+    fi
+    
+    if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
+        source $TCRED_DIR/export.zsh 
+        exit 0
     fi
 
     if [[ "$2" == "--print"  ||  "$2" == "-p" ]]; then
