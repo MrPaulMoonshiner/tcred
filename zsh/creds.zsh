@@ -14,6 +14,7 @@ run_command() {
 
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
         source $TCRED_DIR/db_export.zsh 
+        database_export
         exit 0
     fi
 
