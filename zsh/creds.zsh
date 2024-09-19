@@ -13,8 +13,12 @@ run_command() {
     source $HOME/tcred/counter/counter.zsh
 
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
-        source $TCRED_DIR/db_export.zsh 
-        database_export
+        source $TCRED_DIR/export.zsh 
+        local url=$2
+        local env=${3:-.}
+        local element=${3:-db}
+        local path=$5
+        terminus_export $url $env $element $path
         exit 0
     fi
 
