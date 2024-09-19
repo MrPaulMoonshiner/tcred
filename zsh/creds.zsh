@@ -12,6 +12,11 @@ run_command() {
 
     source $HOME/tcred/counter/counter.zsh
 
+     if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
+        source $TCRED_DIR/creds_help.zsh 
+        exit 0
+    fi
+
     # Check if --help is provided
     if [[ "$1" == "--help"  ||  "$1" == "-h"  ||  "$1" = "" ]]; then
         source $TCRED_DIR/creds_help.zsh 
