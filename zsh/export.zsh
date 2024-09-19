@@ -7,9 +7,9 @@ terminus_export() {
     local util='backup:get'
     local url=${url_aliases[$1]}
     local env=$2
-    local flag_db="--element=$3"
-    local flag_path="--to=\"$4\""
+    local flag_path="--to=$(eval echo $3)"
+    local flag_element="--element=$4"
 
-    echo "terminus $util $url.$env $flag_db $flag_path"
+    echo "terminus $util $url.$env $flag_element $flag_path"
 
 }

@@ -16,8 +16,8 @@ run_command() {
         source $TCRED_DIR/export.zsh 
         local url=$2
         local env=${3:-live}
-        local element=${4:-db}
-        local path=${5:-$HOME}
+        local path=${4:-$HOME}
+        local element=${5:-db}
         terminus_export $url $env $element $path
         exit 0
     fi
