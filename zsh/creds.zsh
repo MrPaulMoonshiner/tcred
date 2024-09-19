@@ -60,6 +60,8 @@ run_command() {
    
    	 echo "terminus $util $url.$env $action"
    	 terminus "$util" "$url.$env" "$action"
+     echo "Current PATH: $PATH"
+     which terminus
 }
 
 # Call the function with the provided arguments
