@@ -11,6 +11,6 @@ terminus_export() {
     local flag_element="--element=$4"
 
     echo "Command to run: terminus $util $url.$env $flag_element $flag_path"
-    terminus "$util" "$url.$env" "$flag_element" $flag_path"
+    terminus "$util" "$url.$env" "$flag_element" "$flag_path"
 
 }
