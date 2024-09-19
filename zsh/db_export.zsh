@@ -7,6 +7,5 @@ source $TCRED_STORAGE_DIR/key_value_storage
 database_export() {
 
     echo "export file connected"
-    exit 0;
 
 }
