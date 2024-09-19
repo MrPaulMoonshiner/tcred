@@ -14,12 +14,6 @@ run_command() {
 
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
         source $TCRED_DIR/export.zsh 
-        # local url=$2
-        # local env=${3:-live}
-        # local path=${4:-$HOME}
-        # local element=${5:-db}
-        echo "Current PATH: $PATH"
-        which terminus
         exit 0
     fi
 
@@ -59,8 +53,6 @@ run_command() {
    
    	 echo "terminus $util $url.$env $action"
    	 terminus "$util" "$url.$env" "$action"
-     echo "Current PATH: $PATH"
-     which terminus
 }
 
 # Call the function with the provided arguments
