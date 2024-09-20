@@ -13,7 +13,7 @@ terminus_export() {
     local util='backup:get'
     local url=${url_aliases[$2]}
     local env=${3:-live}
-    local flag_path="--to=$(eval echo ${4:-./$CURRENT_DATE.sql.gz})"
+    local flag_path="--to=$(eval echo ${4:-./$env.$CURRENT_DATE.sql.gz})"
     local flag_element="--element=${5:-db}"
     echo "Command to run: terminus $util $url.$env $flag_element $flag_path"
     terminus "$util" "$url.$env" "$flag_element" "$flag_path"
