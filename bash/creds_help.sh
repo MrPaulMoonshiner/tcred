@@ -19,11 +19,11 @@ show_help() {
     echo
     echo "Using by only print mode: tcread lk --print -> return string: 'Command to print: terminus drush 72506-food-maggi-srilanka.live uli'"
     echo
-    echo "For importing data from csv file use -i or --import flag and path to file.csv"
+    echo "For download database use --export_db or -dbex flag and URL alias [example: tcred -dbex bit]"
     echo
-    echo "For download database use --export_db or -dbex flag and URL alias [example: tcred -dbex bit]."
+    echo "DB export parameters: 1: flag, 2: url_alias, 3: environment[default:live], 4:  path[default:current path], 5:element[default:db]."
     echo
-    echo "DB export parameters: 1: flag, 2: url_alias, 3: element[default:db], 4: path[default:current path]."
+    echo "DB export example: tcred -dbex bit live ./database/database.tar.gz db"
     echo
     echo "URL Aliases:"
 
