@@ -12,6 +12,46 @@ run_command() {
 
     source $HOME/tcred/counter/counter.zsh
 
+    if [[ "$1" == "--uli_all" || "$1" == "-ua" ]]; then
+         source $TCRED_DIR/uli_all.zsh
+         uli_all $@
+         exit 0
+    fi
+
+    if [[ "$1" == "--sync_multidev" || "$1" == "-sm" ]]; then
+      source $TCRED_DIR/sync_multidev.zsh
+      sync_multidev $@
+      exit 0
+    fi
+
+    if [[ "$1" == "--sync_all_multidevs" || "$1" == "-sam" ]]; then
+      if [[ "$2" == "live" ]]; then
+          echo "Nice try! But you can't ruin live environments. Not in my watch!"
+          exit 0
+      fi
+      if [[ "$2" == "dev" ]]; then
+          echo "DEV environments under Sapient team control!"
+          exit 0
+      fi
+      echo -n "Do you want to sync all $2 environments? (y/N) "
+      if read -q; then
+          echo
+          source $TCRED_DIR/sync_all_multidevs.zsh
+          sync_all_multidevs $@
+          exit 0
+      else
+          echo
+          echo "Sync cancelled."
+          exit 1
+      fi
+      fi
+
+    if [[ "$1" == "--pm:list" || "$1" == "-pml" ]]; then
+         source $HOME/tcred/zsh/pml.zsh
+         handle_pml $@
+         exit 0
+    fi
+
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
         source $TCRED_DIR/export.zsh 
         exit 0
@@ -56,4 +96,4 @@ run_command() {
 }
 
 # Call the function with the provided arguments
-run_command "$1" "$2" "$3" "$4"
+run_command "$@"

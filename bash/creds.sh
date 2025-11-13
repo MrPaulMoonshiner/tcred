@@ -12,6 +12,12 @@ run_command() {
 
     source $HOME/tcred/counter/counter.sh
 
+     if [[ "$1" == "--uli_all" || "$1" == "-ua" ]]; then
+         source $TCRED_DIR/uli_all.sh
+         uli_all $@
+         exit 0
+    fi
+
      if [[ "$1" == "--export_db"  ||  "$1" == "-dbex" ]]; then
         source $TCRED_DIR/export.sh 
         exit 0
